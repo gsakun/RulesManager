@@ -16,7 +16,7 @@ def create_rules_model(groupname, alertname, expr, _for, labels, annotations):
                 }]
             }]
         }
-        filename = groupname + "_" + alertname
+        filename = groupname + "____" + alertname
         rs = write_yaml_file(filename, data)
         return rs
     except Exception as e:
@@ -37,7 +37,7 @@ def update_rules_model(groupname, alertname, expr, _for, labels, annotations):
                 }]
             }]
         }
-        filename = groupname + "_" + alertname
+        filename = groupname + "____" + alertname
         rs = update_yaml_file(filename, data)
         return rs
     except Exception as e:
@@ -47,7 +47,7 @@ def update_rules_model(groupname, alertname, expr, _for, labels, annotations):
 
 def delete_rules_model(groupname,alertname):
     try:
-        filename = groupname + "_" + alertname
+        filename = groupname + "____" + alertname
         rs = delete_yaml_file(filename)
         return rs
     except Exception as e:

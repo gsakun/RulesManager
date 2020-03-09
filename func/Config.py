@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-filepath = 'D:\pyproject\AddRulesWeb\yaml'
+filepath = 'D:\pyproject\RulesManager\yaml'
 
 services = ['ct', 'si']
 

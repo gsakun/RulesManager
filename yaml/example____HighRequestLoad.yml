@@ -5,6 +5,6 @@ groups:
     annotations:
       info: High Request Load
     expr: rate(http_request_total}[5m]) > 1000
-    for: 1m
+    for: 2m
     labels:
       severity: warning

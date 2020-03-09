@@ -20,7 +20,7 @@ def add():
             for rule in group['rules']:
                 rs = create_rules_model(group['name'],rule['alert'],rule['expr'],rule['for'],rule['labels'],rule['annotations'])
                 if rs == 2:
-                    return json.dumps('error! this rule already exist')
+                    return Response(json.dumps('error! this rule already exist'))
     except Exception as e:
         print (e)
         content = json.dumps('create failed')
@@ -68,14 +68,26 @@ def delete():
     return resp
 
 
-@app.route('/ruler/query', methods=['GET'])
+@app.route('/ruler/querylist', methods=['GET'])
 def get_rules_list():
     try:
         content = get_rule()
     except Exception as e:
         print (e)
-        content = []
+        content = {}
 
+    resp = Response(json.dumps(content))
+    return resp
+
+@app.route('/ruler/querydetail', methods=['POST'])
+def get_rules_detail():
+    try:
+        data = request.get_data()
+        info = json.loads(data)
+        content = get_rule_detail(str(info['groupname'] + '____' + info['rulername']))
+    except Exception as e:
+        print (e)
+        content = {}
     resp = Response(json.dumps(content))
     return resp
 

@@ -1,0 +1,15 @@
+{
+	"groups": [{
+			"name": "example2",
+			"rules": [{
+				"alert": "HighRequestLoad"
+			}]
+		},
+		{
+			"name": "example1",
+			"rules": [{
+				"alert": "HighRequestLoad"
+			}]
+		}
+	]
+}

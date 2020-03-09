@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from .Config import filepath
+from collections import defaultdict
 import os
 import yaml
 
@@ -10,11 +11,8 @@ def write_yaml_file(filename, data):
         rule_file = filepath + filename + '.yml'
     else:
         rule_file = filepath + '/' + filename + '.yml'
-    exist = os.path.exists(rule_file)
-    if exist:
-        return 2
     try:
-        with open(rule_file, 'w', encoding='utf-8') as f:
+        with open(rule_file, 'w+', encoding='utf-8') as f:
             yaml.dump(data,f)
         return 0
     except Exception as e:
@@ -56,14 +54,18 @@ def delete_yaml_file(_name):
         return 1
         
 def get_rules():
-    rs = []
+    info = defaultdict(list)
     try:
         for root, dirs, files in os.walk(filepath):
-            rs.append(files)
+            for file in files:
+                file = str(file).replace('.yml','')
+                strlist = file.split('____')
+                info[str(strlist[0])].append(str(strlist[1]))
+                print(info)
+            #rs.append(files)
     except Exception as e:
         print(e)
-    return rs
-
+    return info
 
 def get_detail(filename):
     try:
@@ -71,10 +73,9 @@ def get_detail(filename):
             rule_file = filepath + filename + '.yml'
         else:
             rule_file = filepath + '/' + filename + '.yml'
-
-        content = os.popen('head -1 ' + rule_file).read()
-        values = eval(content[1:len(content)])
-        return values
+        with open(rule_file, 'r') as f:
+            context = yaml.safe_load(f.read())
+            return context
     except Exception as e:
         print(e)
-        return {'name': '', 'alert': '', 'expr': '', '_for': '', 'level': '', 'summary': '', 'description': ''}
+        return {}
