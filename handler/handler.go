@@ -108,6 +108,18 @@ func HandlerRule(db *sql.DB, requiredtype, path string) error {
 					errnum++
 					continue
 				}
+				stmt, err := db.Prepare("DELETE FROM alert_rule WHERE alert_group_id=? and alert_rule_name=?")
+				if err != nil {
+					errnum++
+					log.Errorf("DELETE prepare failed %v", err)
+					continue
+				}
+				_, err = stmt.Exec(alert_group_id, alert_rule_name)
+				if err != nil {
+					errnum++
+					log.Errorf("DELETE exec failed %v", err)
+					continue
+				}
 			}
 		}
 		if errnum != 0 {
