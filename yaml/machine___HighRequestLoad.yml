@@ -1,5 +1,5 @@
 groups:
-- name: example
+- name: machine
   rules:
   - alert: HighRequestLoad
     annotations:
