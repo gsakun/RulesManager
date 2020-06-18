@@ -1,2 +1,0 @@
-{"file":"D:/mygo/src/github.com/gsakun/RulesManager/cmd/main.go:87","func":"main.main.func1","level":"info","msg":"START SYNC","time":"2020-06-16 12:07:19"}
-{"file":"D:/mygo/src/github.com/gsakun/RulesManager/handler/handler.go:54","func":"github.com/gsakun/RulesManager/handler.Queryalertgroup","level":"info","msg":"sync zone table success map[1:machine]","time":"2020-06-16 12:07:19"}
