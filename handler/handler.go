@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
+	"net/http"
 	"os"
 	"strconv"
 
@@ -213,4 +214,23 @@ func writeToFile(fileName string, content string) error {
 		defer f.Close()
 	}
 	return err
+}
+
+func Reloadyaml(uri string) error {
+	req, err := http.NewRequest("POST", uri, nil)
+	if err != nil {
+		log.Errorf("Post webhook reload yaml error,Init request failed errinfo: %v", err)
+		return err
+	}
+	resp, err := http.DefaultClient.Do(req)
+	if err != nil {
+		log.Errorf("Post webhook reload yaml error,Do request failed errinfo: %v", err)
+		return err
+	}
+	resp.Body.Close()
+	if resp.StatusCode != 200 {
+		return fmt.Errorf("Response code not 200")
+	}
+	log.Println("successfully triggered reload")
+	return nil
 }

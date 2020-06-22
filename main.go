@@ -68,6 +68,7 @@ func main() {
 			"maxidle",
 			"Database maxidle.",
 		).Default(string(*maxconn)).Int()
+		uri           = kingpin.Flag("webhook-url", "the url to send a request to when the specified config map volume directory has been updated").Default("").String()
 		requiredgroup = kingpin.Flag("requiredgroup", "this region required type. for example 1,2,3").Default("").String()
 		rulespath     = kingpin.Flag("rulespath", "Rule store path").Default("").String()
 		interval      = kingpin.Flag("interval", "Sync Interval.").Default("60").Int64()
@@ -93,6 +94,10 @@ func main() {
 				path = fmt.Sprintf("%s/", *rulespath)
 			}
 			err := handler.HandlerRule(db, *requiredgroup, path)
+			if err != nil {
+				time.Sleep(60 * time.Second)
+			}
+			err = handler.Reloadyaml(*uri)
 			if err != nil {
 				time.Sleep(60 * time.Second)
 			}
